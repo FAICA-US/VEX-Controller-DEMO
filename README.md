@@ -11,3 +11,8 @@ Prototype software for Rasberry Pi Vex Controller Emulation
 # Requires:
 1. Rasbian
 2. Python
+
+# To Do
++ ADD GUI to the main function
++ ADD Serial term to read hex data IAW documentation
++ ADD Serial term read data into main function
