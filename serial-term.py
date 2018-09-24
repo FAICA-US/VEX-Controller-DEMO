@@ -4,11 +4,12 @@ import time
 import serial
 
 ser = serial.Serial(
-	port='/dev/ttyUSB0',
+	port='/dev/ttyUSB1',
 	baudrate = 4800,
 	parity=serial.PARITY_NONE,
 	stopbits=serial.STOPBITS_ONE,
 	bytesize=serial.EIGHTBITS,
+
 #disable dsr, rts, xonoff flow control
 	dsrdtr=False,
 	rtscts=False,
@@ -20,3 +21,4 @@ while 1:
 	x=ser.read(size=1)
 	print x
 	time.sleep(0.018)
+
