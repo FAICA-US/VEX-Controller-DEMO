@@ -4,6 +4,7 @@ import glob
 import time
 import serial
 
+#Get USB info
 def serial_ports():
     """ Lists serial port names
 
@@ -36,8 +37,10 @@ def serial_ports():
 if __name__ == '__main__':
     print(serial_ports())
 
+
+#Recieve serial data from defined ports above
 ser = serial.Serial(
-	port='/dev/ttyUSB1',
+	port=serial_ports()[0],
 	baudrate = 4800,
 	parity=serial.PARITY_NONE,
 	stopbits=serial.STOPBITS_ONE,
@@ -53,9 +56,9 @@ ser = serial.Serial(
 
 
 #Print data and decode to hex
-while 1:
-	x=ser.read(size=3))
-	print x.decode("hex")
-	time.sleep(0.018)
+while True:
+		x=ser.read(size=3))
+		print x.decode("hex")
+		time.sleep(0.018)
 
 
