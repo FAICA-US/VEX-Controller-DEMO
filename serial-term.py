@@ -9,11 +9,14 @@ ser = serial.Serial(
 	parity=serial.PARITY_NONE,
 	stopbits=serial.STOPBITS_ONE,
 	bytesize=serial.EIGHTBITS,
+#disable dsr, rts, xonoff flow control
+	dsrdtr=False,
+	rtscts=False,
+	xonxoff=False,
 	timeout=1
 )
-counter=0
 
 while 1:
-x=ser.readline()
-print x
-time.sleep(0.018)
+	x=ser.read(size=1)
+	print x
+	time.sleep(0.018)
