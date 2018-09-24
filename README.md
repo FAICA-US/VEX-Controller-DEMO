@@ -1,2 +1,6 @@
 # VEX-Controller-DEMO
-Prototype software for "The Cube" Vex Controller
+Prototype software for Rasberry Pi Vex Controller Emulation
+
+# Requires:
+1. Rasbian
+2. Python
