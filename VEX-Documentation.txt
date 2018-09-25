@@ -1,0 +1,60 @@
+VEX Partner Joystick Notes:
+Pin Out:
+1. No connection.
+2. RS232 TX - data out of the port.
+3. RS232 RX - data in to the port.
+4. Ground.
+
+
+Data Stream Info:
+The following is the interface protocol between the Primary and Secondary Joystick. 
+The baud rate is 4800 
+8 data bits, 
+no parity, 
+1 stop bit,
+no flow control.
+
+The Primary Joystick sends this 3 byte message to the Secondary Joystick @ ~250ms rate:
+Byte 0 0xAA - Sync byte 1
+Byte 1 0x55 - Sync byte 2
+Byte 2 0x3B - Status
+The Secondary Joystick should respond with the following message every 18ms on receipt of the 1st Status message:
+Byte 0 0xAA - Sync byte 1
+Byte 1 0x55 - Sync byte 2
+Byte 2 0x39 - Data Reply
+Byte 3 0x0A - bytes to follow
+Byte 4 0x?? - Right X axis (0-255)
+Byte 5 0x?? - Right Y axis (0-255)
+Byte 6 0x?? - Left X axis (0-255)
+Byte 7 0x?? - Left Y axis (0-255)
+Byte 8 0x0? - Button Group 5 & 6 (Left/Right)
+Bit 0 = Lower, Bit 1 = Upper, Bit 2 = Lower, Bit3 = Upper
+Byte 9 0x?? --Button Group 7 & 8
+(Group 8 ) Bit 0 = Down, Bit 1 = Left, Bit 2 = Up, Bit 3 = Right
+(Group 7 ) Bit 4 = Down, Bit 5 = Left, Bit 6 = Up, Bit 7 = Right
+Byte 10 0x?? - Accelerometer X
+Byte 11 0x?? - Accelerometer Y
+Byte 12 0x?? - Accelerometer Z
+Byte 13 0x?? - Check Sum
+Where:
+U16 checkSum = 0;
+U8 j;
+U8 btf = 10;
+
+for (j=0;j< btf-1;j++) 
+checkSum += joyMessage[3+j]; //Payload after bytes to follow or byte 3 
+checkSum = ~ checkSum + 1;
+joyMessage [13] = (U8) checkSum;
+The Primary Joystick can also send this 3 byte message to verify the version # of the Secondary Joystick:
+Byte 0 0xAA - Sync byte 1
+Byte 1 0x55 - Sync byte 2
+Byte 2 0x3A - Get Version Info
+The Secondary Joystick should respond with the following message:
+Byte 0 0xAA - Sync byte 1
+Byte 1 0x55 - Sync byte 2
+Byte 2 0x3B - Status Reply
+Byte 3 0x02 - bytes to follow
+Byte 4 0x?? - Version Number
+Byte 5 0x?? - Calibration Info (0xDE Calibrated 
+- Any other # - Not Calibrated)
+
