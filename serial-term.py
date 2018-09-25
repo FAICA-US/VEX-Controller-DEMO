@@ -39,26 +39,24 @@ if __name__ == '__main__':
 
 
 #Recieve serial data from defined ports above
-ser = serial.Serial(
-	port=serial_ports()[0],
+ports = [serial.Serial(
+	port=i,
 	baudrate = 4800,
 	parity=serial.PARITY_NONE,
 	stopbits=serial.STOPBITS_ONE,
 	bytesize=serial.EIGHTBITS,
-
 #disable dsr, rts, xonoff flow control
 	dsrdtr=False,
 	rtscts=False,
 	xonxoff=False,
 	timeout=1
-)
-
+) for i in serial_ports()]
 
 
 #Print data and decode to hex
 while True:
-		x=ser.read(size=3))
-		print x.decode("hex")
-		time.sleep(0.018)
-
-
+    for p in ports:
+        byts=p.read(size=3)
+        print p,port+" :",x.decode("hex")
+        time.sleep(0.018)
+    print '\n'
