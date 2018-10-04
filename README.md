@@ -10,7 +10,7 @@ Prototype software for Rasberry Pi Vex Controller Emulation
 
 # Requires:
 1. Rasbian
-2. Python
+2. Python 2.7
 
 # To Do
 + ADD GUI to the main function
